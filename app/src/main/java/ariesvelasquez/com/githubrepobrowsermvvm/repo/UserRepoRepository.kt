@@ -46,8 +46,4 @@ class UserRepoRepository(
 
         }.asLiveData()
     }
-
-    fun convertItem(Use) {
-
-    }
 }
