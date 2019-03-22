@@ -27,7 +27,7 @@ class UserRepoRepository(
         return object : NetworkBoundResource<List<UserRepository>, List<UserRepositorySource>> (appExecutors) {
             override fun saveCallResult(items: List<UserRepositorySource>) {
 
-                val mappedItems: List<UserRepository> = Transformations.switchMap(items, UserRepository(name = items.))
+//                val mappedItems: List<UserRepository> = Transformations.switchMap(items, UserRepository(name = items.))
                 val newList = mutableListOf<UserRepository>()
                 items.forEachIndexed { index, userRepositorySource ->
                     newList.add(UserRepository(
