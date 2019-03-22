@@ -11,5 +11,5 @@ import com.google.gson.annotations.SerializedName
  */
 data class UserRepositorySource(
     @SerializedName("name") var name: String? = "",
-    @SerializedName("items") var repositories: List<UserRepository> = emptyList()
+    @SerializedName("description") var description: String? = null
 )

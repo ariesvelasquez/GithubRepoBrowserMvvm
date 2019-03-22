@@ -1,6 +1,7 @@
 package ariesvelasquez.com.githubrepobrowsermvvm.api
 
 import androidx.lifecycle.LiveData
+import ariesvelasquez.com.githubrepobrowsermvvm.model.UserRepository
 import ariesvelasquez.com.githubrepobrowsermvvm.model.network.Resource
 import ariesvelasquez.com.githubrepobrowsermvvm.model.UserRepositorySource
 import ariesvelasquez.com.githubrepobrowsermvvm.utils.LiveDataCallAdapterFactory
@@ -17,13 +18,13 @@ import retrofit2.http.Path
  * @author Aries Jayson Velasquez
  * @since 3/20/2019.
  */
-interface GithubRepositoriesService {
+interface UserRepositoryService {
 
     /**
      * Get the list of github repository the [user] have from Github API.
      */
     @GET("/users/{user}/repos")
-    fun getUserRepos(@Path("user") user: String) : LiveData<Resource<UserRepositorySource>>
+    fun getUserRepos(@Path("user") user: String) : LiveData<Resource<List<UserRepositorySource>>>
 
     /**
      * Instance Factory
@@ -32,22 +33,21 @@ interface GithubRepositoriesService {
         private const val BASE_URL = "https://api.github.com/"
 
         // LoggingInterceptor
-        private val loggingInterceptor = HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BASIC
-        }
+        private val loggingInterceptor = HttpLoggingInterceptor()
+            .setLevel(HttpLoggingInterceptor.Level.BASIC)
 
         private val client = OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
             .build()
 
-        fun getGithubRepositoryService(): GithubRepositoriesService {
+        fun getUserRepositoryService(): UserRepositoryService {
             return Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(LiveDataCallAdapterFactory())
                 .build()
-                .create(GithubRepositoriesService::class.java)
+                .create(UserRepositoryService::class.java)
         }
     }
 }
